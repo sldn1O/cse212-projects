@@ -10,26 +10,54 @@ public class CustomerService {
 
         // Test Cases
 
-        // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Test 1: Queue size validation
+        // Scenario: Create a queue with an invalid size (-1)
+        // Expected Result: Queue size defaults to 10
         Console.WriteLine("Test 1");
-
-        // Defect(s) Found: 
-
+        var service1 = new CustomerService(-1);
+        Console.WriteLine(service1); // Expected: max_size=10
         Console.WriteLine("=================");
 
-        // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Test 2: Adding a customer to a non-full queue
+        // Scenario: Add a customer to the queue when it has space
+        // Expected Result: Customer is added to the queue
         Console.WriteLine("Test 2");
-
-        // Defect(s) Found: 
-
+        var service2 = new CustomerService(3);
+        service2.AddNewCustomer();  // Input: Customer details
+        Console.WriteLine(service2); // Expected: Queue contains 1 customer
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3: Adding a customer to a full queue
+        // Scenario: Try adding a customer when the queue is full
+        // Expected Result: Error message indicating the queue is full
+        Console.WriteLine("Test 3");
+        var service3 = new CustomerService(1);
+        service3.AddNewCustomer();  // Add first customer
+        service3.AddNewCustomer();  // Try adding a second customer (queue is full)
+        Console.WriteLine(service3); // Expected: Only 1 customer in the queue
+        Console.WriteLine("=================");
+
+        // Test 4: Serving a customer from a non-empty queue
+        // Scenario: Serve a customer when the queue has customers
+        // Expected Result: The first customer is served and removed from the queue
+        Console.WriteLine("Test 4");
+        var service4 = new CustomerService(2);
+        service4.AddNewCustomer();  // Input: Customer 1 details
+        service4.AddNewCustomer();  // Input: Customer 2 details
+        service4.ServeCustomer();   // Serve the first customer
+        Console.WriteLine(service4); // Expected: 1 customer left in the queue
+        Console.WriteLine("=================");
+
+        // Test 5: Serving a customer from an empty queue
+        // Scenario: Try to serve a customer when the queue is empty
+        // Expected Result: Error message indicating the queue is empty
+        Console.WriteLine("Test 5");
+        var service5 = new CustomerService(2);
+        service5.ServeCustomer();   // Try serving when queue is empty
+        Console.WriteLine(service5); // Expected: No customers in the queue
+        Console.WriteLine("=================");
     }
+
 
     private readonly List<Customer> _queue = new();
     private readonly int _maxSize;
